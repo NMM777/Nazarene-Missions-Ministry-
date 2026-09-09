@@ -1,0 +1,275 @@
+/* ============================================
+   La Mesa Thrift — shared styles
+   Palette: deep teal, warm paper, plum accent
+   ============================================ */
+
+:root {
+  --teal-deep:   #1E5F5C;
+  --teal-mid:    #3E8E88;
+  --teal-light:  #DCEEEA;
+  --plum:        #6E4C6E;
+  --plum-light:  #EFE3ED;
+  --paper:       #F6F1E7;
+  --paper-dark:  #EDE5D3;
+  --ink:         #2B2924;
+  --ink-soft:    #5B5648;
+  --tag-string:  #C9BFA5;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, Segoe UI, sans-serif;
+  line-height: 1.55;
+}
+
+h1, h2, h3, .display {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  color: var(--teal-deep);
+  margin: 0 0 0.4em 0;
+  line-height: 1.15;
+}
+
+a { color: var(--plum); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--plum);
+  outline-offset: 2px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--teal-deep);
+  color: #fff;
+  padding: 18px 0;
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.brand-mark {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+.brand-sub {
+  font-size: 0.85rem;
+  color: var(--teal-light);
+}
+nav a {
+  color: #fff;
+  margin-left: 18px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+nav a:hover { opacity: 1; text-decoration: underline; }
+nav a.current { border-bottom: 2px solid var(--plum-light); opacity: 1; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 56px 0 44px;
+  border-bottom: 1px solid var(--paper-dark);
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  max-width: 14ch;
+}
+.hero p {
+  max-width: 52ch;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 28px;
+}
+.hero-meta div {
+  border-left: 3px solid var(--plum);
+  padding-left: 12px;
+}
+.hero-meta strong {
+  display: block;
+  font-family: 'Fraunces', Georgia, serif;
+  color: var(--teal-deep);
+  font-size: 1.05rem;
+}
+.hero-meta span {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 30px;
+  background: var(--plum);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 3px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover { background: var(--teal-deep); text-decoration: none; }
+
+/* ---------- Sections ---------- */
+section { padding: 44px 0; }
+section + section { border-top: 1px solid var(--paper-dark); }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 700px) {
+  .story-grid { grid-template-columns: 1fr; }
+}
+.story-photo {
+  background: var(--teal-light);
+  border: 1px solid var(--teal-mid);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal-deep);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+.hours-list li {
+  display: flex;
+  justify-content: space-between;
+  max-width: 320px;
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--paper-dark);
+}
+.hours-list li.open strong { color: var(--plum); }
+
+footer {
+  background: var(--teal-deep);
+  color: var(--teal-light);
+  padding: 26px 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+footer a { color: #fff; }
+
+/* ---------- Shop grid (used on shop.html) ---------- */
+.shop-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+.shop-toolbar select, .shop-toolbar input {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--tag-string);
+  background: #fff;
+  border-radius: 3px;
+}
+.shop-status {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.tag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.tag-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--paper-dark);
+  padding: 18px 16px 16px;
+}
+.tag-card::before {
+  /* the little tag hole */
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--tag-string);
+  background: var(--paper);
+}
+.tag-card.featured {
+  border-color: var(--plum);
+  box-shadow: inset 0 0 0 1px var(--plum);
+}
+.tag-card .item-photo {
+  background: var(--paper-dark);
+  aspect-ratio: 1/1;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+.tag-card .item-photo img { width: 100%; height: 100%; object-fit: cover; }
+.tag-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  padding-right: 20px;
+}
+.tag-card .item-cat {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.tag-card .item-price {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.3rem;
+  color: var(--plum);
+}
+.tag-card .featured-flag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--teal-deep);
+  background: var(--teal-light);
+  padding: 3px 8px;
+  border-radius: 2px;
+}

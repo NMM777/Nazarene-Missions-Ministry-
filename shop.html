@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop &mdash; La Mesa Thrift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark">La Mesa Thrift</span>
+      <span class="brand-sub">donated goods &middot; good causes</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="current">Shop</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:24px;">
+  <div class="wrap">
+    <h1 style="font-size:clamp(1.7rem,4vw,2.4rem);">This week's finds</h1>
+    <p>Volunteers add items here as they're sorted and priced. Featured items are pieces
+    worth a closer look.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+
+    <div class="shop-toolbar">
+      <label for="sortSelect" style="font-size:0.9rem; color:var(--ink-soft);">Sort:</label>
+      <select id="sortSelect">
+        <option value="featured">Featured first</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="newest">Newest</option>
+      </select>
+
+      <label for="categorySelect" style="font-size:0.9rem; color:var(--ink-soft); margin-left:10px;">Category:</label>
+      <select id="categorySelect">
+        <option value="">All</option>
+      </select>
+
+      <span class="shop-status" id="shopStatus">Loading current inventory&hellip;</span>
+    </div>
+
+    <div class="tag-grid" id="tagGrid"></div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    La Mesa Thrift &middot; La Mesa, Texas &middot; Run entirely by volunteers
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
