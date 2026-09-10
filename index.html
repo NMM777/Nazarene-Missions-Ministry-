@@ -4,10 +4,181 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nazarene Missions Ministry &mdash; Donated Goods, Good Causes</title>
-<meta name="description" content="Nazarene Missions Ministry in Lamesa, Texas, supporting outreach and mission work through donated goods.">
+<meta name="description" content="Nazarene Missions Ministry in Lamesa, Texas, supporting outreach and mission work through donated goods and community fundraisers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<style>
+  /* Light modern turquoise theme (inline, so it works even if style.css is minimal) */
+  :root {
+    --turquoise: #14b8a6;
+    --turquoise-dark: #0f766e;
+    --turquoise-soft: #ccfbf1;
+    --ink: #0f172a;
+    --ink-soft: #475569;
+    --bg: #ffffff;
+    --bg-alt: #f8fafc;
+    --border: #e2e8f0;
+    --radius: 14px;
+    --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+  }
+
+  body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0;
+    background: var(--bg);
+  }
+
+  a { color: var(--turquoise-dark); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+
+  /* Header */
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .site-header .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 0;
+  }
+  .brand { display: flex; flex-direction: column; gap: 2px; }
+  .brand-mark {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 700; font-size: 1.05rem; letter-spacing: 0.2px;
+  }
+  .brand-sub { font-size: 0.8rem; color: var(--ink-soft); }
+
+  nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  nav a {
+    color: var(--ink); font-weight: 500; font-size: 0.95rem;
+    padding: 6px 10px; border-radius: 8px; text-decoration: none;
+  }
+  nav a:hover, nav a.current {
+    background: var(--turquoise-soft); color: var(--turquoise-dark); text-decoration: none;
+  }
+
+  /* Hero */
+  .hero {
+    background:
+      radial-gradient(1200px 600px at 10% -10%, var(--turquoise-soft), transparent 60%),
+      radial-gradient(1000px 500px at 90% 10%, #ecfeff, transparent 60%);
+    padding: 56px 0 40px;
+  }
+  .hero h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.4rem);
+    line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em;
+  }
+  .hero p { color: var(--ink-soft); font-size: 1.05rem; max-width: 720px; margin: 0 0 22px; }
+
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px; margin: 22px 0 26px;
+  }
+  .hero-meta div {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 14px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+  }
+  .hero-meta strong { display: block; font-size: 0.95rem; color: var(--turquoise-dark); }
+  .hero-meta span { font-size: 0.85rem; color: var(--ink-soft); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--turquoise); color: #fff; font-weight: 600;
+    padding: 12px 18px; border-radius: 12px; text-decoration: none;
+    border: 1px solid transparent;
+    box-shadow: 0 8px 20px rgba(20,184,166,0.25);
+  }
+  .btn:hover { background: var(--turquoise-dark); text-decoration: none; }
+  .btn-outline {
+    background: #fff; color: var(--turquoise-dark);
+    border: 1px solid var(--turquoise); box-shadow: none;
+  }
+  .btn-outline:hover { background: var(--turquoise-soft); }
+
+  /* Sections */
+  section { padding: 44px 0; }
+  section + section { border-top: 1px solid var(--border); }
+  section h2 {
+    font-family: Fraunces, Georgia, serif; font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 1.8rem); margin: 0 0 10px; letter-spacing: -0.01em;
+  }
+  section p { color: var(--ink-soft); }
+
+  /* Story grid */
+  .story-grid {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: start;
+  }
+  .story-photo img {
+    border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  @media (max-width: 900px) {
+    .story-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Hours */
+  .hours-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  }
+  .hours-list li {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px;
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px;
+  }
+  .hours-list li.open { background: var(--turquoise-soft); border-color: #a7f3d0; }
+  @media (max-width: 640px) {
+    .hours-list { grid-template-columns: 1fr; }
+  }
+
+  /* Fundraiser banner */
+  #fundraiser {
+    background: linear-gradient(135deg, var(--turquoise-soft), #ecfeff);
+    border-top: none;
+  }
+  .fundraiser-inner {
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 22px; align-items: center;
+  }
+  .fundraiser-inner h2 { margin: 0 0 8px; }
+  .check-list { margin: 10px 0 14px; padding-left: 18px; }
+  .check-list li { margin: 6px 0; }
+  .fundraiser-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .fundraiser-art { display: flex; align-items: center; justify-content: center; }
+  .badge {
+    background: var(--turquoise); color: #fff; font-weight: 700;
+    padding: 10px 14px; border-radius: 999px; font-size: 0.9rem;
+    box-shadow: 0 10px 22px rgba(20,184,166,0.35);
+  }
+  @media (max-width: 900px) {
+    .fundraiser-inner { grid-template-columns: 1fr; }
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 22px 0 28px; background: var(--bg-alt);
+  }
+  footer .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .muted { color: var(--ink-soft); }
+</style>
 </head>
 <body>
 
@@ -15,12 +186,13 @@
   <div class="wrap">
     <div class="brand">
       <span class="brand-mark">Nazarene Missions Ministry</span>
-      <span class="brand-sub">donated goods &middot; good causes</span>
+      <span class="brand-sub">donated goods · good causes</span>
     </div>
     <nav>
       <a href="index.html" class="current">Home</a>
       <a href="shop.html">Shop</a>
       <a href="#fundraiser">Fundraiser</a>
+      <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -28,7 +200,7 @@
 <section class="hero">
   <div class="wrap">
     <h1>Every item has a story. Now yours can too.</h1>
-    <p>Everything on our shelves was given, not bought &mdash; and every sale goes right back into
+    <p>Everything on our shelves was given, not bought — and every sale goes right back into
     the community. Stop by on Saturday, or browse a few of our current finds below.</p>
 
     <div class="hero-meta">
@@ -36,3 +208,106 @@
         <strong>Open Saturdays</strong>
         <span>Doors open, all are welcome</span>
       </div>
+      <div>
+        <strong>100% Donated</strong>
+        <span>Every item given by neighbors</span>
+      </div>
+      <div>
+        <strong>Lamesa, TX</strong>
+        <span>Come see what's new</span>
+      </div>
+    </div>
+
+    <a class="btn" href="shop.html">Browse this week's finds →</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap story-grid">
+    <div>
+      <h2>Why we do this</h2>
+      <p>Every item on our racks and shelves was donated by someone in this community. When you
+      shop with us, you're not just finding a good deal — you're helping fund the outreach
+      and mission work that this ministry exists to support. Volunteers sort, clean, and price
+      everything by hand, and a portion of our shelves is set aside for pieces worth a special
+      look — the kind of finds regulars come back for.</p>
+      <p>Can't make it in person? The shop page is updated by our volunteers throughout the
+      week, so you can see what's caught our eye before doors open.</p>
+    </div>
+    <div class="story-photo">
+      <img src="images/ministry.jpg" alt="Nazarene Missions Ministry">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Hours</h2>
+    <ul class="hours-list">
+      <li class="open"><span>Saturday</span><strong>Open to the public</strong></li>
+      <li><span>Sunday – Friday</span><span>Closed — donations accepted by arrangement</span></li>
+    </ul>
+    <p style="margin-top:18px; color:var(--ink-soft); font-size:0.92rem;">
+      Have items to donate? Bring them by on a Saturday, or reach out to arrange a drop-off.
+    </p>
+  </div>
+</section>
+
+<section id="fundraiser">
+  <div class="wrap fundraiser-inner">
+    <div>
+      <h2>Fundraiser on Whatnot</h2>
+      <p>We’re launching live fundraisers on Whatnot to reach more people and fund more mission work. Expect
+      curated lots, special finds, and a simple way to give from anywhere.</p>
+      <ul class="check-list">
+        <li>Live auctions and “buy now” items</li>
+        <li>Secure checkout through Whatnot</li>
+        <li>Proceeds support Nazarene Missions Ministry</li>
+      </ul>
+      <div class="fundraiser-ctas">
+        <!-- Replace this link with your actual Whatnot shop URL when you have it -->
+        <a class="btn" href="https://whatnot.com" target="_blank" rel="noopener">Open our Whatnot shop</a>
+        <a class="btn btn-outline" href="#contact">Questions? Contact us</a>
+      </div>
+    </div>
+    <div class="fundraiser-art">
+      <div class="badge">Fundraiser</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact & location</h2>
+    <div class="contact-grid">
+      <div>
+        <p><strong>Nazarene Missions Ministry</strong><br>
+        Lamesa, Texas</p>
+        <p class="muted">Run entirely by volunteers</p>
+      </div>
+      <div>
+        <p><strong>Email:</strong> <a href="mailto:hello@nazarene-missions.org">hello@nazarene-missions.org</a></p>
+        <p><strong>Phone:</strong> <a href="tel:+10000000000">(000) 000‑0000</a></p>
+        <p class="muted">Update these with your real contact details.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>Nazarene Missions Ministry</strong>
+      <span class="muted"> · Lamesa, Texas · Run entirely by volunteers</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="#fundraiser">Fundraiser</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
