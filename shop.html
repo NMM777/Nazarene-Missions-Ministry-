@@ -1,67 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop &mdash; La Mesa Thrift</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Nazarene Missions Ministry</title>
+  <meta name="description" content="Browse donated items at Nazarene Missions Ministry in Lamesa, Texas. Every purchase supports mission work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turquoise: #14b8a6;
+      --turquoise-dark: #0f766e;
+      --turquoise-soft: #ccfbf1;
+      --ink: #0f172a;
+      --ink-soft: #475569;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --border: #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      line-height: 1.6;
+      margin: 0;
+      background: var(--bg);
+    }
+
+    a { color: var(--turquoise-dark); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header .wrap {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 14px 0;
+    }
+    .brand { display: flex; flex-direction: column; gap: 2px; }
+    .brand-mark {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.2px;
+    }
+    .brand-sub { font-size: 0.8rem; color: var(--ink-soft); }
+
+    nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    nav a {
+      color: var(--ink); font-weight: 500; font-size: 0.95rem;
+      padding: 6px 10px; border-radius: 8px; text-decoration: none;
+    }
+    nav a:hover, nav a.current {
+      background: var(--turquoise-soft); color: var(--turquoise-dark); text-decoration: none;
+    }
+
+    /* Page header */
+    .page-header {
+      padding: 44px 0 22px;
+    }
+    .page-header h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.2rem);
+      margin: 0 0 8px; letter-spacing: -0.02em;
+    }
+    .page-header p {
+      color: var(--ink-soft); margin: 0; max-width: 720px;
+    }
+
+    /* Sections */
+    section { padding: 28px 0 44px; }
+    section + section { border-top: 1px solid var(--border); }
+    section h2 {
+      font-family: Fraunces, Georgia, serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 1.7rem); margin: 0 0 10px; letter-spacing: -0.01em;
+    }
+    .section-intro { color: var(--ink-soft); margin: -6px 0 18px; }
+
+    /* Filters */
+    .filters {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      margin-bottom: 14px;
+    }
+    .filters select {
+      appearance: none;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 30px 8px 10px;
+      font-size: 0.95rem;
+      position: relative;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+        linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+      background-position:
+        calc(100% - 16px) calc(1px + 50%),
+        calc(100% - 11px) calc(1px + 50%);
+      background-size:
+        5px 5px,
+        5px 5px;
+      background-repeat: no-repeat;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 14px;
+    }
+    .card {
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; box-shadow: 0 8px 20px rgba(2,6,23,0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.08);
+    }
+    .item-photo {
+      width: 100%; aspect-ratio: 4/3; background: #f1f5f9;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .item-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .photo-placeholder {
+      color: var(--ink-soft); font-size: 0.9rem;
+    }
+    .card-body { padding: 12px; }
+    .card-body h3 {
+      margin: 0 0 4px; font-size: 1rem; font-weight: 600;
+    }
+    .item-cat { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 6px; }
+    .item-price { font-weight: 700; color: var(--turquoise-dark); }
+    .featured-flag {
+      display: inline-block;
+      background: var(--turquoise-soft);
+      color: var(--turquoise-dark);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 999px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .card-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Status text */
+    #shopStatus {
+      color: var(--ink-soft); font-size: 0.95rem; margin: 6px 0 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 0 28px; background: var(--bg-alt);
+    }
+    footer .wrap {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .muted { color: var(--ink-soft); }
+  </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="wrap">
     <div class="brand">
-      <span class="brand-mark">La Mesa Thrift</span>
-      <span class="brand-sub">donated goods &middot; good causes</span>
+      <span class="brand-mark">Nazarene Missions Ministry</span>
+      <span class="brand-sub">donated goods · good causes</span>
     </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="shop.html" class="current">Shop</a>
+      <a href="index.html#fundraiser">Fundraiser</a>
+      <a href="index.html#contact">Contact</a>
     </nav>
   </div>
 </header>
 
-<section class="hero" style="padding-bottom:24px;">
+<div class="page-header">
   <div class="wrap">
-    <h1 style="font-size:clamp(1.7rem,4vw,2.4rem);">This week's finds</h1>
-    <p>Volunteers add items here as they're sorted and priced. Featured items are pieces
-    worth a closer look.</p>
+    <h1>Shop</h1>
+    <p>Browse donated items. Every purchase helps fund outreach and mission work.</p>
+    <p id="shopStatus">Loading inventory…</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Featured finds</h2>
+    <p class="section-intro">Items our volunteers are excited about this week.</p>
+    <div id="featuredGrid">
+      <!-- Featured items will be inserted here by JavaScript -->
+    </div>
   </div>
 </section>
 
-<section style="padding-top:0;">
+<section>
   <div class="wrap">
+    <h2>All items</h2>
+    <p class="section-intro">Filter and sort to find what you’re looking for.</p>
 
-    <div class="shop-toolbar">
-      <label for="sortSelect" style="font-size:0.9rem; color:var(--ink-soft);">Sort:</label>
-      <select id="sortSelect">
-        <option value="featured">Featured first</option>
-        <option value="price-desc">Price: high to low</option>
-        <option value="price-asc">Price: low to high</option>
-        <option value="newest">Newest</option>
-      </select>
+    <div class="filters">
+      <label>
+        Sort:
+        <select id="sortSelect">
+          <option value="featured">Featured first</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="newest">Newest</option>
+        </select>
+      </label>
 
-      <label for="categorySelect" style="font-size:0.9rem; color:var(--ink-soft); margin-left:10px;">Category:</label>
-      <select id="categorySelect">
-        <option value="">All</option>
-      </select>
-
-      <span class="shop-status" id="shopStatus">Loading current inventory&hellip;</span>
+      <label>
+        Category:
+        <select id="categorySelect">
+          <option value="">All categories</option>
+        </select>
+      </label>
     </div>
 
-    <div class="tag-grid" id="tagGrid"></div>
-
+    <div id="tagGrid">
+      <!-- All items will be inserted here by JavaScript -->
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    La Mesa Thrift &middot; La Mesa, Texas &middot; Run entirely by volunteers
+    <div>
+      <strong>Nazarene Missions Ministry</strong>
+      <span class="muted"> · Lamesa, Texas · Run entirely by volunteers</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#fundraiser">Fundraiser</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+/* ==========================================================
+   Nazarene Missions Ministry — shop.html inventory loader
+   Reads a published Google Sheet (as CSV) and renders items.
+
+   >>> SETUP: replace SHEET_CSV_URL below with your own
+   published-to-web CSV link.
+   ========================================================== */
+
+const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_SHEET_CSV_LINK_HERE";
+
+// Expected columns in the sheet (any order, matched by header name):
+// name, price, category, featured, photo, dateAdded
+// "featured" should contain TRUE/YES/1 for pieces you want to highlight.
+
+let allItems = [];
+
+async function loadInventory() {
+  const statusEl = document.getElementById("shopStatus");
+  const gridEl = document.getElementById("tagGrid");
+  const featuredEl = document.getElementById("featuredGrid");
+
+  if (!SHEET_CSV_URL || SHEET_CSV_URL.startsWith("PASTE_")) {
+    statusEl.textContent = "Inventory sheet not connected yet — see README.md.";
+    gridEl.innerHTML = sampleItemsHTML();
+    if (featuredEl) featuredEl.innerHTML = sampleFeaturedHTML();
+    return;
+  }
+
+  try {
+    const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error("Sheet fetch failed: " + res.status);
+    const csvText = await res.text();
+    allItems = parseCSV(csvText);
+
+    statusEl.textContent =
+      allItems.length + " item" + (allItems.length === 1 ? "" : "s") + " available";
+
+    populateCategoryFilter(allItems);
+
+    // Optional: render featured items separately
+    if (featuredEl) {
+      const featured = allItems.filter(i => i.featured);
+      if (featured.length === 0) {
+        featuredEl.innerHTML =
+          "<p style='color:var(--ink-soft)'>No featured items right now — check back soon.</p>";
+      } else {
+        featuredEl.innerHTML = '<div class="card-grid">' + featured.map(itemCardHTML).join("") + "</div>";
+      }
+    }
+
+    renderItems();
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = "Couldn't load live inventory right now.";
+    gridEl.innerHTML = sampleItemsHTML();
+    if (featuredEl) featuredEl.innerHTML = sampleFeaturedHTML();
+  }
+}
+
+/* Small, dependency-free CSV parser (handles quoted commas) */
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') { inQuotes = false; }
+      else { field += c; }
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ""; }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ""; }
+      else if (c === '\r') { /* skip */ }
+      else { field += c; }
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+
+  const headers = rows.shift().map(h => h.trim().toLowerCase());
+  return rows
+    .filter(r => r.some(cell => cell.trim() !== ""))
+    .map(r => {
+      const obj = {};
+      headers.forEach((h, idx) => obj[h] = (r[idx] || "").trim());
+      return {
+        name: obj.name || "Unnamed item",
+        price: parseFloat(obj.price) || 0,
+        category: obj.category || "General",
+        featured: /^(true|yes|1)$/i.test(obj.featured || ""),
+        photo: obj.photo || "",
+        dateAdded: obj.dateadded || ""
+      };
+    });
+}
+
+function populateCategoryFilter(items) {
+  const select = document.getElementById("categorySelect");
+  if (!select) return;
+  const cats = [...new Set(items.map(i => i.category))].sort();
+  cats.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    select.appendChild(opt);
+  });
+}
+
+function renderItems() {
+  const grid = document.getElementById("tagGrid");
+  const sortBy = document.getElementById("sortSelect")?.value || "featured";
+  const category = document.getElementById("categorySelect")?.value || "";
+
+  let items = [...allItems];
+  if (category) items = items.filter(i => i.category === category);
+
+  items.sort((a, b) => {
+    if (sortBy === "price-desc") return b.price - a.price;
+    if (sortBy === "price-asc") return a.price - b.price;
+    if (sortBy === "newest") return (b.dateAdded || "").localeCompare(a.dateAdded || "");
+    // "featured" default: featured items first, then by price desc
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return b.price - a.price;
+  });
+
+  if (items.length === 0) {
+    grid.innerHTML =
+      "<p style='color:var(--ink-soft)'>No items in this category right now — check back soon.</p>";
+    return;
+  }
+
+  grid.innerHTML = '<div class="card-grid">' + items.map(itemCardHTML).join("") + "</div>";
+}
+
+function itemCardHTML(item) {
+  const photoInner = item.photo
+    ? `<img src="${escapeHTML(item.photo)}" alt="${escapeHTML(item.name)}">`
+    : `<div class="photo-placeholder">photo coming soon</div>`;
+
+  return `
+    <article class="card">
+      <div class="item-photo">${photoInner}</div>
+      <div class="card-body">
+        <h3>${escapeHTML(item.name)}</h3>
+        <div class="item-cat">${escapeHTML(item.category)}</div>
+        <div class="item-price">$${item.price.toFixed(2)}</div>
+        ${item.featured ? '<span class="featured-flag">Featured find</span>' : ""}
+      </div>
+    </article>
+  `;
+}
+
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* Shown only before the sheet is connected, so the page never looks broken */
+function sampleItemsHTML() {
+  const demo = [
+    { name: "Oak side table", price: 45, category: "Furniture", featured: true },
+    { name: "Cast iron skillet", price: 18, category: "Kitchen", featured: false },
+    { name: "Denim jacket, men's M", price: 12, category: "Clothing", featured: false }
+  ];
+  return '<div class="card-grid">' + demo.map(itemCardHTML).join("") + "</div>";
+}
+
+function sampleFeaturedHTML() {
+  const demo = [
+    { name: "Vintage lamp", price: 28, category: "Home", featured: true },
+    { name: "Hardcover book set", price: 15, category: "Books", featured: true }
+  ];
+  return '<div class="card-grid">' + demo.map(itemCardHTML).join("") + "</div>";
+}
+
+const sortSelect = document.getElementById("sortSelect");
+const categorySelect = document.getElementById("categorySelect");
+
+if (sortSelect) sortSelect.addEventListener("change", renderItems);
+if (categorySelect) categorySelect.addEventListener("change", renderItems);
+
+loadInventory();
+</script>
+
 </body>
 </html>
