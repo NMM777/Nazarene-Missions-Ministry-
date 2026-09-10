@@ -1,93 +1,155 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nazarene Missions Ministry &mdash; Donated Goods, Good Causes</title>
-<meta name="description" content="Nazarene Missions Ministry in Lamesa, Texas, supporting outreach and mission work through donated goods.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nazarene Missions Ministry — Donated Goods, Good Causes</title>
+  <meta name="description" content="Nazarene Missions Ministry in Lamesa, Texas, supporting outreach and mission work through donated goods and community fundraisers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turquoise: #14b8a6;
+      --turquoise-dark: #0f766e;
+      --turquoise-soft: #ccfbf1;
+      --ink: #0f172a;
+      --ink-soft: #475569;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --border: #e2e8f0;
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--turquoise-dark); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1100px, 92vw); margin: 0 auto; }
 
-<header class="site-header">
-  <div class="wrap">
-    <div class="brand">
-      <span class="brand-mark">Nazarene Missions Ministry</span>
-      <span class="brand-sub">donated goods &middot; good causes</span>
-    </div>
-    <nav>
-      <a href="index.html" class="current">Home</a>
-      <a href="shop.html">Shop</a>
-    </nav>
-  </div>
-</header>
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 14px 0;
+    }
+    .brand { display: flex; flex-direction: column; gap: 2px; }
+    .brand-mark {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.2px;
+    }
+    .brand-sub { font-size: 0.8rem; color: var(--ink-soft); }
+    .main-nav { display: flex; gap: 18px; align-items: center; }
+    .main-nav a {
+      color: var(--ink); font-weight: 500; font-size: 0.95rem;
+      padding: 6px 10px; border-radius: 8px; text-decoration: none;
+    }
+    .main-nav a:hover, .main-nav a.current {
+      background: var(--turquoise-soft); color: var(--turquoise-dark); text-decoration: none;
+    }
 
-<section class="hero">
-  <div class="wrap">
-    <h1>Every item has a story. Now yours can too.</h1>
-    <p>Everything on our shelves was given, not bought &mdash; and every sale goes right back into
-    the community. Stop by on Saturday, or browse a few of our current finds below.</p>
+    /* Mobile menu */
+    .mobile-menu-btn {
+      display: none; flex-direction: column; gap: 4px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+    }
+    .mobile-menu-btn span {
+      width: 22px; height: 2px; background: var(--ink); border-radius: 2px;
+    }
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: flex; }
+      .main-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: #fff; border-bottom: 1px solid var(--border);
+        padding: 10px 0 14px; display: none; flex-direction: column; gap: 6px;
+      }
+      .main-nav.open { display: flex; }
+      .main-nav a { display: block; padding: 10px 16px; }
+    }
 
-    <div class="hero-meta">
-      <div>
-        <strong>Open Saturdays</strong>
-        <span>Doors open, all are welcome</span>
-      </div>
-      <div>
-        <strong>100% Donated</strong>
-        <span>Every item given by neighbors</span>
-      </div>
-      <div>
-        <strong>Lamesa, TX</strong>
-        <span>Come see what's new</span>
-      </div>
-    </div>
+    /* Hero */
+    .hero {
+      background:
+        radial-gradient(1200px 600px at 10% -10%, var(--turquoise-soft), transparent 60%),
+        radial-gradient(1000px 500px at 90% 10%, #ecfeff, transparent 60%);
+      padding: 56px 0 40px;
+    }
+    .hero h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em;
+    }
+    .hero p { color: var(--ink-soft); font-size: 1.05rem; max-width: 720px; margin: 0 0 22px; }
+    .hero-meta {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px; margin: 22px 0 26px;
+    }
+    .hero-meta div {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 14px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+    }
+    .hero-meta strong { display: block; font-size: 0.95rem; color: var(--turquoise-dark); }
+    .hero-meta span { font-size: 0.85rem; color: var(--ink-soft); }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    <a class="btn" href="shop.html">Browse this week's finds &rarr;</a>
-  </div>
-</section>
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--turquoise); color: #fff; font-weight: 600;
+      padding: 12px 18px; border-radius: 12px; text-decoration: none;
+      border: 1px solid transparent;
+      box-shadow: 0 8px 20px rgba(20,184,166,0.25);
+    }
+    .btn:hover { background: var(--turquoise-dark); text-decoration: none; }
+    .btn-outline {
+      background: #fff; color: var(--turquoise-dark);
+      border: 1px solid var(--turquoise); box-shadow: none;
+    }
+    .btn-outline:hover { background: var(--turquoise-soft); }
 
-<section>
-  <div class="wrap story-grid">
-    <div>
-      <h2>Why we do this</h2>
-      <p>Every item on our racks and shelves was donated by someone in this community. When you
-      shop with us, you're not just finding a good deal &mdash; you're helping fund the outreach
-      and mission work that this ministry exists to support. Volunteers sort, clean, and price
-      everything by hand, and a portion of our shelves is set aside for pieces worth a special
-      look &mdash; the kind of finds regulars come back for.</p>
-      <p>Can't make it in person? The shop page below is updated by our volunteers throughout the
-      week, so you can see what's caught our eye before doors open.</p>
-    </div>
-    <div class="story-photo">
-  <img src="images/ministry.jpg" alt="Nazarene Missions Ministry">
-</div>
-    </div>
-  </div>
-</section>
+    /* Sections */
+    .section { padding: 44px 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+    .section h2 {
+      font-family: Fraunces, Georgia, serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 1.8rem); margin: 0 0 10px; letter-spacing: -0.01em;
+    }
+    .section-intro { color: var(--ink-soft); margin: -6px 0 18px; }
 
-<section>
-  <div class="wrap">
-    <h2>Hours</h2>
-    <ul class="hours-list">
-      <li class="open"><span>Saturday</span><strong>Open to the public</strong></li>
-      <li><span>Sunday &ndash; Friday</span><span>Closed &mdash; donations accepted by arrangement</span></li>
-    </ul>
-    <p style="margin-top:18px; color:var(--ink-soft); font-size:0.92rem;">
-      Have items to donate? Bring them by on a Saturday, or reach out to arrange a drop-off.
-    </p>
-  </div>
-</section>
+    /* Story grid */
+    .story-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: start;
+    }
+    .story-photo img { border-radius: var(--radius); box-shadow: var(--shadow); }
+    @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } }
 
-<footer>
-  <div class="wrap">
-    Nazarene Missions Ministry &middot; La Mesa, Texas &middot; Run entirely by volunteers
-  </div>
-</footer>
-
-</body>
-</html>
-```
+    /* Cards */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 14px;
+    }
+    .card {
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; box-shadow: 0 8px 20px rgba(2,6,23,0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.08);
+    }
+    .card img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; background: #f1f5f9;
+    }
+    .card-body { padding: 12px; }
+    .card-body h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 600; }
+    .muted
