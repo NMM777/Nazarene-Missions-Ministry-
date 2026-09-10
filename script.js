@@ -1,5 +1,5 @@
 /* ==========================================================
-   La Mesa Thrift — shop.html inventory loader
+   Nazarene Missions Ministry — shop.html inventory loader
    Reads a published Google Sheet (as CSV) and renders items.
 
    >>> SETUP: replace SHEET_CSV_URL below with your own
@@ -17,10 +17,12 @@ let allItems = [];
 async function loadInventory() {
   const statusEl = document.getElementById("shopStatus");
   const gridEl = document.getElementById("tagGrid");
+  const featuredEl = document.getElementById("featuredGrid");
 
   if (!SHEET_CSV_URL || SHEET_CSV_URL.startsWith("PASTE_")) {
     statusEl.textContent = "Inventory sheet not connected yet — see README.md.";
     gridEl.innerHTML = sampleItemsHTML();
+    if (featuredEl) featuredEl.innerHTML = sampleFeaturedHTML();
     return;
   }
 
@@ -29,13 +31,29 @@ async function loadInventory() {
     if (!res.ok) throw new Error("Sheet fetch failed: " + res.status);
     const csvText = await res.text();
     allItems = parseCSV(csvText);
-    statusEl.textContent = allItems.length + " item" + (allItems.length === 1 ? "" : "s") + " available";
+
+    statusEl.textContent =
+      allItems.length + " item" + (allItems.length === 1 ? "" : "s") + " available";
+
     populateCategoryFilter(allItems);
+
+    // Optional: render featured items separately
+    if (featuredEl) {
+      const featured = allItems.filter(i => i.featured);
+      if (featured.length === 0) {
+        featuredEl.innerHTML =
+          "<p style='color:var(--ink-soft)'>No featured items right now — check back soon.</p>";
+      } else {
+        featuredEl.innerHTML = featured.map(itemCardHTML).join("");
+      }
+    }
+
     renderItems();
   } catch (err) {
     console.error(err);
     statusEl.textContent = "Couldn't load live inventory right now.";
     gridEl.innerHTML = sampleItemsHTML();
+    if (featuredEl) featuredEl.innerHTML = sampleFeaturedHTML();
   }
 }
 
@@ -79,6 +97,7 @@ function parseCSV(text) {
 
 function populateCategoryFilter(items) {
   const select = document.getElementById("categorySelect");
+  if (!select) return;
   const cats = [...new Set(items.map(i => i.category))].sort();
   cats.forEach(cat => {
     const opt = document.createElement("option");
@@ -90,8 +109,8 @@ function populateCategoryFilter(items) {
 
 function renderItems() {
   const grid = document.getElementById("tagGrid");
-  const sortBy = document.getElementById("sortSelect").value;
-  const category = document.getElementById("categorySelect").value;
+  const sortBy = document.getElementById("sortSelect")?.value || "featured";
+  const category = document.getElementById("categorySelect")?.value || "";
 
   let items = [...allItems];
   if (category) items = items.filter(i => i.category === category);
@@ -106,25 +125,29 @@ function renderItems() {
   });
 
   if (items.length === 0) {
-    grid.innerHTML = "<p style='color:var(--ink-soft)'>No items in this category right now — check back soon.</p>";
+    grid.innerHTML =
+      "<p style='color:var(--ink-soft)'>No items in this category right now — check back soon.</p>";
     return;
   }
 
-  grid.innerHTML = items.map(itemCardHTML).join("");
+  grid.innerHTML = '<div class="card-grid">' + items.map(itemCardHTML).join("") + "</div>";
 }
 
 function itemCardHTML(item) {
   const photoInner = item.photo
     ? `<img src="${escapeHTML(item.photo)}" alt="${escapeHTML(item.name)}">`
-    : "photo coming soon";
+    : `<div class="photo-placeholder">photo coming soon</div>`;
+
   return `
-    <div class="tag-card ${item.featured ? "featured" : ""}">
+    <article class="card">
       <div class="item-photo">${photoInner}</div>
-      <h3>${escapeHTML(item.name)}</h3>
-      <div class="item-cat">${escapeHTML(item.category)}</div>
-      <div class="item-price">$${item.price.toFixed(2)}</div>
-      ${item.featured ? '<span class="featured-flag">Featured find</span>' : ""}
-    </div>
+      <div class="card-body">
+        <h3>${escapeHTML(item.name)}</h3>
+        <div class="item-cat">${escapeHTML(item.category)}</div>
+        <div class="item-price">$${item.price.toFixed(2)}</div>
+        ${item.featured ? '<span class="featured-flag">Featured find</span>' : ""}
+      </div>
+    </article>
   `;
 }
 
@@ -141,10 +164,21 @@ function sampleItemsHTML() {
     { name: "Cast iron skillet", price: 18, category: "Kitchen", featured: false },
     { name: "Denim jacket, men's M", price: 12, category: "Clothing", featured: false }
   ];
-  return demo.map(itemCardHTML).join("");
+  return '<div class="card-grid">' + demo.map(itemCardHTML).join("") + "</div>";
 }
 
-document.getElementById("sortSelect").addEventListener("change", renderItems);
-document.getElementById("categorySelect").addEventListener("change", renderItems);
+function sampleFeaturedHTML() {
+  const demo = [
+    { name: "Vintage lamp", price: 28, category: "Home", featured: true },
+    { name: "Hardcover book set", price: 15, category: "Books", featured: true }
+  ];
+  return '<div class="card-grid">' + demo.map(itemCardHTML).join("") + "</div>";
+}
+
+const sortSelect = document.getElementById("sortSelect");
+const categorySelect = document.getElementById("categorySelect");
+
+if (sortSelect) sortSelect.addEventListener("change", renderItems);
+if (categorySelect) categorySelect.addEventListener("change", renderItems);
 
 loadInventory();
